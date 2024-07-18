@@ -25,11 +25,24 @@
             top: 0;
             left: 0;
         }
+        #controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
     <div id="heart">❤️</div>
+    <div id="controls">
+        <button id="playPause">暂停/播放</button>
+        <input type="file" id="audioFile" accept="audio/*">
+    </div>
 
     <script>
         // 设置数字雨的符号，可以轻松更改
@@ -72,6 +85,28 @@
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+        });
+
+        // 音乐控制
+        const audio = new Audio();
+        const playPauseButton = document.getElementById('playPause');
+        const audioFileInput = document.getElementById('audioFile');
+
+        playPauseButton.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        });
+
+        audioFileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const fileURL = URL.createObjectURL(file);
+                audio.src = 'your-music-file.mp3';
+                audio.play();
+            }
         });
     </script>
 </body>
